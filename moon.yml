@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=../../.moon/cache/schemas/project.json
+
+layer: tool
+
+fileGroups:
+  src:
+    - src/**/*
+    - tests/**/*
+    - README.md
+    - TESTING.md
+    - AGENTS.md
+    - CLAUDE.md
+    - .env.example
+    - scripts/**/*
+    - moon.yml
+    - package.json
+    - tsconfig.json
+    - tsconfig.build.json
+    - tsdown.config.ts
+    - vitest.config.ts
+
+tasks:
+  build:
+    command: tsdown
+    inputs:
+      - "@group(src)"
+    outputs:
+      - dist/**
+  lint:
+    command: biome lint --diagnostic-level=error
+    inputs:
+      - "@group(src)"
+  lint-fix:
+    command: biome lint --fix --unsafe --diagnostic-level=error
+    inputs:
+      - "@group(src)"
+  typecheck:
+    command: tsc --noEmit
+    inputs:
+      - "@group(src)"
+  test:
+    deps:
+      - bridge-sdk:build
+    command: vitest run
+    inputs:
+      - "@group(src)"
+  live-bridge-mina-to-zeko:
+    description: Manual real-network validation of the single long-lived bridge command from Mina testnet to Zeko testnet.
+    deps:
+      - build
+    command: node ./dist/cli.js bridge --from mina:testnet --to zeko:testnet --amount 1 --json --verbose
+    options:
+      cache: false
+      runInCI: false
+    inputs:
+      - "@group(src)"
+  live-bridge-zeko-to-mina:
+    description: Manual real-network validation of the single long-lived bridge command from Zeko testnet to Mina testnet.
+    deps:
+      - build
+    command: node ./dist/cli.js bridge --from zeko:testnet --to mina:testnet --amount 1 --json --verbose
+    options:
+      cache: false
+      runInCI: false
+    inputs:
+      - "@group(src)"
