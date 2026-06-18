@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=./cache/schemas/workspace.json
+
+projects:
+  bridge-cli: "packages/bridge-cli"
+  networks: "packages/networks"
