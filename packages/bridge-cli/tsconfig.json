@@ -1,0 +1,29 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "esnext",
+		"lib": ["ES2022"],
+		"moduleResolution": "bundler",
+		"types": ["node"],
+		"strict": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"outDir": "./dist",
+		"paths": {
+			"@zeko-labs/bridge-sdk": ["../bridge-sdk/src/index.ts"],
+			"@zeko-labs/graphql": ["../graphql/src/index.ts"],
+			"@zeko-labs/graphql/mina": ["../graphql/src/mina.ts"],
+			"@zeko-labs/graphql/zeko": ["../graphql/src/zeko.ts"],
+			"@zeko/networks": ["../networks/src/index.ts"]
+		},
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true
+	},
+	"include": ["src", "tests", "scripts"]
+}

@@ -1,0 +1,25 @@
+layer: library
+fileGroups:
+  src:
+    - src/**/*
+    - tests/**/*
+    - package.json
+    - tsconfig.json
+    - moon.yml
+tasks:
+  lint:
+    command: biome check --formatter-enabled=false src tests
+    inputs:
+      - "@group(src)"
+  lint-fix:
+    command: biome check --formatter-enabled=false --write src tests
+    inputs:
+      - "@group(src)"
+  typecheck:
+    command: tsgo --noEmit --declaration false --declarationMap false
+    inputs:
+      - "@group(src)"
+  test:
+    command: vitest run
+    inputs:
+      - "@group(src)"
